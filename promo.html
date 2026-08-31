@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotions - WinGo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .promo-card {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border: 1px solid #3a3a6a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .promo-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .promo-title {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #ebd175;
+            margin-bottom: 8px;
+        }
+
+        .promo-desc {
+            font-size: 0.85rem;
+            color: #8f92b2;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .promo-reward {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid #3a3a6a;
+        }
+
+        .reward-amount {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .claim-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .claim-btn.claimed {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="top-header">
+        <div class="brand-title">💰 Promotions</div>
+        <div class="balance-badge">₹<span id="balance-display">100.00</span></div>
+    </div>
+
+    <div class="bet-section" style="padding: 12px;">
+        <div class="promo-card" onclick="claimPromo(this, 100)">
+            <div class="promo-title">🎁 Welcome Bonus</div>
+            <div class="promo-desc">Get 100 rupees on your first deposit</div>
+            <div class="promo-reward">
+                <span class="reward-amount">₹100</span>
+                <button class="claim-btn" onclick="event.stopPropagation()">Claim</button>
+            </div>
+        </div>
+
+        <div class="promo-card" onclick="claimPromo(this, 50)">
+            <div class="promo-title">🎉 Daily Login Bonus</div>
+            <div class="promo-desc">Login everyday to get bonus rewards</div>
+            <div class="promo-reward">
+                <span class="reward-amount">₹50</span>
+                <button class="claim-btn" onclick="event.stopPropagation()">Claim</button>
+            </div>
+        </div>
+
+        <div class="promo-card" onclick="claimPromo(this, 25)">
+            <div class="promo-title">🏆 Winning Streak</div>
+            <div class="promo-desc">Win 5 games in a row and earn bonus</div>
+            <div class="promo-reward">
+                <span class="reward-amount">₹25</span>
+                <button class="claim-btn" onclick="event.stopPropagation()">Claim</button>
+            </div>
+        </div>
+
+        <div class="promo-card" onclick="claimPromo(this, 200)">
+            <div class="promo-title">💎 Referral Program</div>
+            <div class="promo-desc">Invite friends and earn 200 rupees per referral</div>
+            <div class="promo-reward">
+                <span class="reward-amount">₹200</span>
+                <button class="claim-btn" onclick="event.stopPropagation()">Claim</button>
+            </div>
+        </div>
+
+        <div class="promo-card" onclick="claimPromo(this, 75)">
+            <div class="promo-title">🎊 Lucky Draw</div>
+            <div class="promo-desc">Every 100 bets gives you a chance to win</div>
+            <div class="promo-reward">
+                <span class="reward-amount">₹75</span>
+                <button class="claim-btn" onclick="event.stopPropagation()">Claim</button>
+            </div>
+        </div>
+
+        <div class="status-msg" id="status-msg"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item active" onclick="navigateTo('promo.html')">
+            <span class="nav-icon">💰</span>
+            <span>Promo</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('wheel.html')">
+            <span class="nav-icon">🎡</span>
+            <span>Wheel</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('earn.html')">
+            <span class="nav-icon">👥</span>
+            <span>Earn</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <span class="nav-icon">👤</span>
+            <span>Mine</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let balance = 100.00;
+    const balanceEl = document.getElementById('balance-display');
+    const statusEl = document.getElementById('status-msg');
+
+    function loadBalance() {
+        const saved = localStorage.getItem('wingoGameData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            balance = data.balance || 100.00;
+            balanceEl.textContent = balance.toFixed(2);
+        }
+    }
+
+    function claimPromo(element, amount) {
+        const btn = element.querySelector('.claim-btn');
+        if (btn.classList.contains('claimed')) {
+            statusEl.textContent = "✅ Already claimed!";
+            statusEl.classList.add('error');
+            return;
+        }
+
+        balance += amount;
+        balanceEl.textContent = balance.toFixed(2);
+        btn.textContent = 'Claimed ✓';
+        btn.classList.add('claimed');
+        
+        statusEl.textContent = `🎉 Claimed ₹${amount}!`;
+        statusEl.classList.add('success');
+
+        // Save updated balance
+        const saved = localStorage.getItem('wingoGameData');
+        const data = saved ? JSON.parse(saved) : {};
+        data.balance = balance;
+        localStorage.setItem('wingoGameData', JSON.stringify(data));
+
+        setTimeout(() => {
+            statusEl.textContent = '';
+            statusEl.classList.remove('success', 'error');
+        }, 3000);
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    loadBalance();
+</script>
+</body>
+</html>

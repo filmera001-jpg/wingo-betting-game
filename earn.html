@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn - WinGo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .earn-card {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border: 1px solid #3a3a6a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .earn-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .earn-title {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #ebd175;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .earn-desc {
+            font-size: 0.85rem;
+            color: #8f92b2;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .earn-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #121225;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-label {
+            color: #8f92b2;
+            font-size: 0.75rem;
+        }
+
+        .stat-value {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .referral-code {
+            background-color: #121225;
+            border: 1px solid #3a3a6a;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .code-label {
+            font-size: 0.75rem;
+            color: #8f92b2;
+            margin-bottom: 6px;
+        }
+
+        .code-display {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ebd175;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .task-list {
+            margin-top: 15px;
+        }
+
+        .task-item {
+            background-color: #121225;
+            border-left: 3px solid #d4af37;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info h4 {
+            color: #ebd175;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .task-info p {
+            color: #8f92b2;
+            font-size: 0.8rem;
+        }
+
+        .task-reward {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="top-header">
+        <div class="brand-title">👥 Earn Money</div>
+        <div class="balance-badge">₹<span id="balance-display">100.00</span></div>
+    </div>
+
+    <div class="bet-section" style="padding: 12px;">
+        <div class="earn-card">
+            <div class="earn-title">🔗 Referral Program</div>
+            <div class="earn-desc">Invite your friends and earn commission on their winnings</div>
+            
+            <div class="earn-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Friends Invited</div>
+                    <div class="stat-value">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total Earnings</div>
+                    <div class="stat-value">₹0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Commission Rate</div>
+                    <div class="stat-value">10%</div>
+                </div>
+            </div>
+
+            <div class="referral-code">
+                <div class="code-label">Your Referral Code</div>
+                <div class="code-display" id="referral-code">WINGO2024</div>
+                <button class="copy-btn" onclick="copyCode()">��� Copy Code</button>
+            </div>
+        </div>
+
+        <div class="earn-card">
+            <div class="earn-title">✅ Complete Daily Tasks</div>
+            <div class="earn-desc">Complete tasks to earn extra rewards</div>
+
+            <div class="task-list">
+                <div class="task-item">
+                    <div class="task-info">
+                        <h4>Place 10 Bets</h4>
+                        <p>Progress: 3/10</p>
+                    </div>
+                    <div class="task-reward">₹25</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-info">
+                        <h4>Win 5 Games</h4>
+                        <p>Progress: 1/5</p>
+                    </div>
+                    <div class="task-reward">₹50</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-info">
+                        <h4>Reach ₹500 Balance</h4>
+                        <p>Progress: ₹100/₹500</p>
+                    </div>
+                    <div class="task-reward">₹100</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-info">
+                        <h4>Login 7 Days Consecutive</h4>
+                        <p>Progress: 2/7 days</p>
+                    </div>
+                    <div class="task-reward">₹75</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="earn-card">
+            <div class="earn-title">🎯 Weekly Challenge</div>
+            <div class="earn-desc">Win ₹1000 or more in a week to get bonus</div>
+            
+            <div class="earn-stats">
+                <div class="stat-item">
+                    <div class="stat-label">This Week Winnings</div>
+                    <div class="stat-value">₹0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Target</div>
+                    <div class="stat-value">₹1000</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Bonus Reward</div>
+                    <div class="stat-value">₹500</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-msg" id="status-msg"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('promo.html')">
+            <span class="nav-icon">💰</span>
+            <span>Promo</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('wheel.html')">
+            <span class="nav-icon">🎡</span>
+            <span>Wheel</span>
+        </div>
+        <div class="nav-item active" onclick="navigateTo('earn.html')">
+            <span class="nav-icon">👥</span>
+            <span>Earn</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <span class="nav-icon">👤</span>
+            <span>Mine</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let balance = 100.00;
+    const balanceEl = document.getElementById('balance-display');
+    const statusEl = document.getElementById('status-msg');
+
+    function loadBalance() {
+        const saved = localStorage.getItem('wingoGameData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            balance = data.balance || 100.00;
+            balanceEl.textContent = balance.toFixed(2);
+        }
+    }
+
+    function copyCode() {
+        const code = document.getElementById('referral-code').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            statusEl.textContent = "✅ Referral code copied!";
+            statusEl.classList.add('success');
+            setTimeout(() => {
+                statusEl.textContent = '';
+                statusEl.classList.remove('success');
+            }, 2000);
+        });
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    loadBalance();
+</script>
+</body>
+</html>

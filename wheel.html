@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel - WinGo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 12px;
+        }
+
+        .wheel {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #dc3545 0deg 36deg,
+                #28a745 36deg 72deg,
+                #9c27b0 72deg 108deg,
+                #e5a93c 108deg 144deg,
+                #dc3545 144deg 180deg,
+                #28a745 180deg 216deg,
+                #9c27b0 216deg 252deg,
+                #e5a93c 252deg 288deg,
+                #dc3545 288deg 324deg,
+                #28a745 324deg 360deg
+            );
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset -2px -2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+            position: relative;
+            transition: transform 0.1s linear;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ebd175, #d4af37);
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 3px solid #121225;
+        }
+
+        .wheel-pointer {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid #ebd175;
+            margin-bottom: -5px;
+            z-index: 10;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 53, 69, 0.5);
+        }
+
+        .spin-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .wheel-rules {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border: 1px solid #3a3a6a;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            color: #8f92b2;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        .wheel-rules h3 {
+            color: #ebd175;
+            margin-bottom: 10px;
+        }
+
+        .prize-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #1a1a38;
+        }
+
+        .prize-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="top-header">
+        <div class="brand-title">🎡 Lucky Wheel</div>
+        <div class="balance-badge">₹<span id="balance-display">100.00</span></div>
+    </div>
+
+    <div class="bet-section" style="padding: 0;">
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="wheel" id="wheel"></div>
+            <button class="spin-btn" id="spin-btn" onclick="spinWheel()">🎯 SPIN NOW</button>
+            <div class="status-msg" id="status-msg"></div>
+
+            <div class="wheel-rules">
+                <h3>Prize Sections</h3>
+                <div class="prize-item">
+                    <span>Red:</span>
+                    <span>₹100</span>
+                </div>
+                <div class="prize-item">
+                    <span>Green:</span>
+                    <span>₹50</span>
+                </div>
+                <div class="prize-item">
+                    <span>Violet:</span>
+                    <span>₹200</span>
+                </div>
+                <div class="prize-item">
+                    <span>Gold:</span>
+                    <span>₹150</span>
+                </div>
+                <div class="prize-item">
+                    <span>Spin once per day</span>
+                    <span>Free</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('promo.html')">
+            <span class="nav-icon">💰</span>
+            <span>Promo</span>
+        </div>
+        <div class="nav-item active" onclick="navigateTo('wheel.html')">
+            <span class="nav-icon">🎡</span>
+            <span>Wheel</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('earn.html')">
+            <span class="nav-icon">👥</span>
+            <span>Earn</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <span class="nav-icon">👤</span>
+            <span>Mine</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let balance = 100.00;
+    let isSpinning = false;
+    let lastSpinDate = localStorage.getItem('wheelLastSpinDate');
+    const today = new Date().toDateString();
+
+    const balanceEl = document.getElementById('balance-display');
+    const statusEl = document.getElementById('status-msg');
+    const spinBtn = document.getElementById('spin-btn');
+    const wheel = document.getElementById('wheel');
+
+    const prizes = [100, 50, 200, 150, 100, 50, 200, 150, 100, 50];
+    const colors = ['#dc3545', '#28a745', '#9c27b0', '#e5a93c', '#dc3545', '#28a745', '#9c27b0', '#e5a93c', '#dc3545', '#28a745'];
+
+    function loadBalance() {
+        const saved = localStorage.getItem('wingoGameData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            balance = data.balance || 100.00;
+            balanceEl.textContent = balance.toFixed(2);
+        }
+    }
+
+    function checkDailyLimit() {
+        if (lastSpinDate === today) {
+            spinBtn.disabled = true;
+            statusEl.textContent = "⏱️ You've already spun today! Come back tomorrow.";
+            statusEl.classList.add('error');
+        }
+    }
+
+    function spinWheel() {
+        if (isSpinning) return;
+        
+        if (lastSpinDate === today) {
+            statusEl.textContent = "⏱️ Daily limit reached!";
+            statusEl.classList.add('error');
+            return;
+        }
+
+        isSpinning = true;
+        spinBtn.disabled = true;
+        statusEl.textContent = "🎯 Spinning...";
+        statusEl.classList.remove('error', 'success');
+
+        // Random number of spins + final position
+        const randomPrizeIndex = Math.floor(Math.random() * prizes.length);
+        const spins = 5 + Math.random();
+        const finalRotation = (spins * 360) + (randomPrizeIndex * 36);
+
+        wheel.style.transform = `rotate(${finalRotation}deg)`;
+
+        setTimeout(() => {
+            const prize = prizes[randomPrizeIndex];
+            balance += prize;
+            balanceEl.textContent = balance.toFixed(2);
+
+            statusEl.textContent = `🎉 You won ₹${prize}!`;
+            statusEl.classList.add('success');
+
+            // Save data
+            const saved = localStorage.getItem('wingoGameData');
+            const data = saved ? JSON.parse(saved) : {};
+            data.balance = balance;
+            localStorage.setItem('wingoGameData', JSON.stringify(data));
+            localStorage.setItem('wheelLastSpinDate', today);
+
+            isSpinning = false;
+            spinBtn.disabled = true;
+            lastSpinDate = today;
+        }, 3000);
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    loadBalance();
+    checkDailyLimit();
+</script>
+</body>
+</html>

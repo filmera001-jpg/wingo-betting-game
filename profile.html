@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - WinGo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border-bottom: 2px solid #3a3a6a;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 12px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .profile-name {
+            color: #ebd175;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+
+        .profile-id {
+            color: #8f92b2;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 15px 12px;
+            background-color: #121225;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border: 1px solid #3a3a6a;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            color: #8f92b2;
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+            font-weight: normal;
+        }
+
+        .stat-card .value {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            background: linear-gradient(135deg, #2a2a50, #1a1a38);
+            border: 1px solid #3a3a6a;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 12px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            color: #ebd175;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a38;
+            color: #8f92b2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #ebd175;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-icon {
+            font-size: 1.2rem;
+        }
+
+        .arrow {
+            color: #3a3a6a;
+            font-size: 1rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        .achievement-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .achievement {
+            background-color: #121225;
+            border: 1px solid #3a3a6a;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .achievement-name {
+            color: #8f92b2;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <div class="profile-name" id="username">User Profile</div>
+        <div class="profile-id" id="user-id">ID: 2026083101</div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Bets</h4>
+            <div class="value" id="total-bets">0</div>
+        </div>
+        <div class="stat-card">
+            <h4>Win Rate</h4>
+            <div class="value" id="win-rate">0%</div>
+        </div>
+        <div class="stat-card">
+            <h4>Net Profit</h4>
+            <div class="value" id="net-profit">₹0</div>
+        </div>
+    </div>
+
+    <div class="bet-section" style="padding: 0;">
+        <div class="section">
+            <div class="section-title">📊 Account</div>
+            <div class="menu-item" onclick="alert('View Account Details')">
+                <span><span class="menu-icon">📋</span> Account Info</span>
+                <span class="arrow">›</span>
+            </div>
+            <div class="menu-item" onclick="alert('View Transaction History')">
+                <span><span class="menu-icon">💳</span> Transaction History</span>
+                <span class="arrow">›</span>
+            </div>
+            <div class="menu-item" onclick="alert('Manage Withdrawal')">
+                <span><span class="menu-icon">💰</span> Withdraw</span>
+                <span class="arrow">›</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">🏆 Achievements</div>
+            <div class="achievement-list">
+                <div class="achievement unlocked">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-name">First Bet</div>
+                </div>
+                <div class="achievement">
+                    <div class="achievement-icon">🔥</div>
+                    <div class="achievement-name">Win Streak</div>
+                </div>
+                <div class="achievement">
+                    <div class="achievement-icon">💎</div>
+                    <div class="achievement-name">High Roller</div>
+                </div>
+                <div class="achievement">
+                    <div class="achievement-icon">⭐</div>
+                    <div class="achievement-name">VIP Member</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚙️ Settings</div>
+            <div class="menu-item" onclick="alert('Sound: ON')">
+                <span><span class="menu-icon">🔊</span> Sound & Vibration</span>
+                <span class="arrow">›</span>
+            </div>
+            <div class="menu-item" onclick="alert('Privacy Settings')">
+                <span><span class="menu-icon">🔒</span> Privacy & Security</span>
+                <span class="arrow">›</span>
+            </div>
+            <div class="menu-item" onclick="alert('About WinGo v1.0.0')">
+                <span><span class="menu-icon">ℹ️</span> About</span>
+                <span class="arrow">›</span>
+            </div>
+        </div>
+
+        <div style="padding: 12px;">
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('index.html')">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('promo.html')">
+            <span class="nav-icon">💰</span>
+            <span>Promo</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('wheel.html')">
+            <span class="nav-icon">🎡</span>
+            <span>Wheel</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('earn.html')">
+            <span class="nav-icon">👥</span>
+            <span>Earn</span>
+        </div>
+        <div class="nav-item active" onclick="navigateTo('profile.html')">
+            <span class="nav-icon">👤</span>
+            <span>Mine</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadProfile() {
+        const saved = localStorage.getItem('wingoGameData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            const stats = data.userStats || {};
+            
+            document.getElementById('total-bets').textContent = stats.totalBets || 0;
+            
+            let winRate = 0;
+            if (stats.totalBets > 0) {
+                winRate = Math.round((stats.totalWins / stats.totalBets) * 100);
+            }
+            document.getElementById('win-rate').textContent = winRate + '%';
+            
+            const netProfit = (stats.winnings || 0) - (stats.totalBets * 10 * 1); // Rough calculation
+            document.getElementById('net-profit').textContent = '₹' + Math.max(0, netProfit).toFixed(2);
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('wingoGameData');
+            localStorage.removeItem('wheelLastSpinDate');
+            alert('Logged out successfully!');
+            window.location.href = 'index.html';
+        }
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    loadProfile();
+</script>
+</body>
+</html>

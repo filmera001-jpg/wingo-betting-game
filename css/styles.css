@@ -1,0 +1,454 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: #121225;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 414px;
+    background-color: #1a1a38;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 70px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* Top Bar */
+.top-header {
+    background-color: #121225;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #25254a;
+}
+
+.brand-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #d4af37, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.balance-badge {
+    background: linear-gradient(135deg, #2a2a50, #1a1a38);
+    border: 2px solid #d4af37;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Mode Selector Tabs */
+.mode-selector {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background-color: #121225;
+    overflow-x: auto;
+    border-bottom: 1px solid #25254a;
+}
+
+.mode-card {
+    flex: 1;
+    background-color: #25254a;
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #8f92b2;
+    cursor: pointer;
+    min-width: 70px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.mode-card:hover {
+    background-color: #2a2a5a;
+}
+
+.mode-card.active {
+    background: linear-gradient(180deg, #e5c158, #b8860b);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(229, 193, 88, 0.4);
+}
+
+/* Timer Banner */
+.timer-banner {
+    background: linear-gradient(135deg, #ebd175, #c89622);
+    margin: 10px 12px;
+    border-radius: 12px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    box-shadow: 0 4px 15px rgba(229, 193, 88, 0.3);
+}
+
+.timer-left .game-name {
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.timer-left .period-id {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-top: 4px;
+    font-family: monospace;
+}
+
+.timer-right {
+    text-align: right;
+}
+
+.timer-label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.timer-clock {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.time-box {
+    background-color: #ffffff;
+    color: #d93838;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-width: 28px;
+    text-align: center;
+}
+
+/* Bet Controls Section */
+.bet-section {
+    padding: 0 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Color Buttons */
+.color-btns {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.color-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.color-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.btn-green { 
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.btn-violet { 
+    background: linear-gradient(135deg, #9c27b0, #ab47bc);
+}
+
+.btn-red { 
+    background: linear-gradient(135deg, #dc3545, #e74c3c);
+}
+
+/* Number Grid */
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    background-color: #121225;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #25254a;
+}
+
+.num-ball {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: inset -2px -2px 4px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.num-ball:hover {
+    transform: scale(1.1);
+    box-shadow: inset -2px -2px 4px rgba(0,0,0,0.4), 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Number Ball Styling */
+.ball-0 { background: linear-gradient(135deg, #dc3545 50%, #9c27b0 50%); }
+.ball-5 { background: linear-gradient(135deg, #28a745 50%, #9c27b0 50%); }
+.ball-green { background: linear-gradient(135deg, #28a745, #20c997); }
+.ball-red { background: linear-gradient(135deg, #dc3545, #e74c3c); }
+
+/* Multiplier & Random Bar */
+.multiplier-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.mult-btn {
+    flex: 1;
+    background-color: #25254a;
+    border: 1px solid #3a3a6a;
+    color: #8f92b2;
+    padding: 8px 0;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.mult-btn:hover {
+    background-color: #2a2a5a;
+}
+
+.mult-btn.active {
+    background: linear-gradient(135deg, #dc3545, #e74c3c);
+    color: #fff;
+    border-color: #dc3545;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.4);
+}
+
+/* Big / Small Buttons */
+.big-small-btns {
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.bs-btn {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.bs-btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-big { 
+    background: linear-gradient(135deg, #e5a93c, #ffc857);
+}
+
+.btn-small { 
+    background: linear-gradient(135deg, #6c757d, #7d8a96);
+}
+
+/* Submit Bet Button */
+.submit-bet-btn {
+    width: 100%;
+    padding: 14px 0;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.submit-bet-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.5);
+}
+
+.submit-bet-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Status Toast */
+.status-msg {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ebd175;
+    min-height: 20px;
+    margin: 10px 0;
+    padding: 8px;
+    background-color: rgba(229, 193, 88, 0.1);
+    border-radius: 6px;
+    border: 1px solid #3a3a6a;
+}
+
+.status-msg.success {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+    border-color: #28a745;
+}
+
+.status-msg.error {
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: #dc3545;
+}
+
+/* History Table */
+.history-panel {
+    background-color: #121225;
+    margin: 0 12px 15px 12px;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #25254a;
+}
+
+.history-title {
+    font-size: 0.9rem;
+    color: #ebd175;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.history-table th {
+    color: #8f92b2;
+    padding: 8px 4px;
+    border-bottom: 2px solid #25254a;
+    font-weight: bold;
+}
+
+.history-table td {
+    padding: 10px 4px;
+    border-bottom: 1px solid #1a1a38;
+}
+
+.history-table tr:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+.dot-badge {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* Bottom Navbar */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #121225;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 2px solid #25254a;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+    color: #8f92b2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 6px;
+}
+
+.nav-item:hover {
+    color: #d4af37;
+}
+
+.nav-item.active { 
+    color: #ebd175;
+    font-weight: bold;
+}
+
+.nav-icon {
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+
+/* Responsive */
+@media (max-width: 414px) {
+    .app-container {
+        width: 100vw;
+        max-width: 100vw;
+        box-shadow: none;
+    }
+}
+
+/* Scrollbar Styling */
+.bet-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bet-section::-webkit-scrollbar-track {
+    background: #121225;
+}
+
+.bet-section::-webkit-scrollbar-thumb {
+    background: #3a3a6a;
+    border-radius: 3px;
+}
+
+.bet-section::-webkit-scrollbar-thumb:hover {
+    background: #4a4a8a;
+}
